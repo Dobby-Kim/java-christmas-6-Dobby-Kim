@@ -14,11 +14,11 @@ class OrdersTest {
 
     @BeforeEach
     void setup() {
-        List<Order> orderList = Arrays.asList(
+        List<Order> testOrders = Arrays.asList(
                 new Order(Menu.MUSHROOM_SOUP, 2),
                 new Order(Menu.BBQ_RIBS, 1)
         );
-        orders = new Orders(orderList);
+        orders = new Orders(testOrders);
     }
 
     @Test
@@ -40,5 +40,12 @@ class OrdersTest {
         assertThrows(UnsupportedOperationException.class, () -> {
             orders.getOrders().add(new Order(Menu.CHOCOLATE_CAKE, 1));
         });
+    }
+
+    @Test
+    void testCalculateTotalQuantity() {
+        int totalQuantity = orders.calculateTotalQuantity();
+        int expectedQuantity = 2 + 1; // Quantity of mushroom soup and BBQ ribs
+        assertEquals(expectedQuantity, totalQuantity);
     }
 }
