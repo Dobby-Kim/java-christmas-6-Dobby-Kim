@@ -1,4 +1,4 @@
-package christmas;
+package christmas.enums;
 
 public enum MenuCategory {
     APPETIZER,

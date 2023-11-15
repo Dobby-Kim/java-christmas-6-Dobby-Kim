@@ -1,4 +1,7 @@
-package christmas;
+package christmas.dto;
+
+import christmas.enums.EventBadge;
+import christmas.model.Date;
 
 import java.util.List;
 import java.util.Map;

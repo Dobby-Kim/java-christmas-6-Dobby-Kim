@@ -1,10 +1,10 @@
-package christmas;
+package christmas.dto;
 
 public class OrderDTO {
     private final String menuName;
     private final int quantity;
 
-    OrderDTO(String menuName, int quantity) {
+    public OrderDTO(String menuName, int quantity) {
         this.menuName = menuName;
         this.quantity = quantity;
     }

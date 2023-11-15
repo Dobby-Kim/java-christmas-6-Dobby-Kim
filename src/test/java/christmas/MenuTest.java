@@ -1,5 +1,7 @@
 package christmas;
 
+import christmas.enums.Menu;
+import christmas.enums.MenuCategory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

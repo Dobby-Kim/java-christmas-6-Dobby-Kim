@@ -1,5 +1,8 @@
 package christmas;
 
+import christmas.enums.Menu;
+import christmas.model.Order;
+import christmas.model.Orders;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

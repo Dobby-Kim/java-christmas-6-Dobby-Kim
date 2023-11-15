@@ -1,4 +1,4 @@
-package christmas;
+package christmas.enums;
 
 public enum EventBadge {
     SANTA("산타", 20_000),

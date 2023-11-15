@@ -1,4 +1,14 @@
-package christmas;
+package christmas.controller;
+
+import christmas.dto.OrderDTO;
+import christmas.dto.OrderDetailsDTO;
+import christmas.enums.EventBadge;
+import christmas.enums.MenuCategory;
+import christmas.model.Date;
+import christmas.model.Orders;
+import christmas.util.*;
+import christmas.view.ErrorMessage;
+import christmas.view.OutputView;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +21,7 @@ public class PromotionController {
     }
 
     private static boolean isOrdersHasInvalidAmount(Orders orders) {
-        return orders.calculateTotalQuantity() > 20;
+        return orders.calculateTotalQuantity() > Constant.MAX_TOTAL_AMOUNT;
     }
 
     private static boolean isOrdersHasOnlyBeverage(Orders orders) {
@@ -34,23 +44,23 @@ public class PromotionController {
     }
 
     private Map<String, Integer> calculateDiscounts(Date date, Orders orders) {
-        return DiscountCalculator.calculateDiscounts(date, orders);
+        return DiscountUtil.calculateDiscounts(date, orders);
     }
 
     private boolean isChampagneGift(int totalAmount) {
-        return DiscountCalculator.isChampagneGift(totalAmount);
+        return DiscountUtil.isChampagneGift(totalAmount);
     }
 
     private int calculateTotalBenefit(Map<String, Integer> discounts) {
-        return DiscountCalculator.calculateTotalBenefit(discounts);
+        return DiscountUtil.calculateTotalBenefit(discounts);
     }
 
     private int calculateTotalDiscount(Map<String, Integer> discounts) {
-        return DiscountCalculator.calculateTotalDiscount(discounts);
+        return DiscountUtil.calculateTotalDiscount(discounts);
     }
 
     private EventBadge calculateEventBadge(int totalBenefit) {
-        return BadgeCalculator.calculateEventBadge(totalBenefit);
+        return BadgeCalculatorUtil.calculateEventBadge(totalBenefit);
     }
 
     private List<OrderDTO> createOrderDTOs(Orders orders) {
@@ -61,13 +71,13 @@ public class PromotionController {
 
     public void run() {
         boolean isValidOrder = false;
-        Date date = DateService.readUserDateInputAndCreateDate();
+        Date date = DateUtil.readUserDateInputAndCreateDate();
         Orders orders = null;
         while (!isValidOrder) {
-            orders = OrderService.readUserInputAndCreateOrders();
+            orders = OrderUtil.readUserInputAndCreateOrders();
             isValidOrder = ordersValidator(orders);
             if (!isValidOrder) {
-                OutputView.printMessage(ErrorMessage.formatErrorMessage("주문"));
+                OutputView.printMessage(ErrorMessage.formatErrorMessage(Constant.ORDER));
             }
         }
         OrderDetailsDTO eventDetails = processOrders(date, orders);

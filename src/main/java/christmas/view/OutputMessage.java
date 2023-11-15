@@ -1,4 +1,4 @@
-package christmas;
+package christmas.view;
 
 public class OutputMessage {
     public static final String INTRODUCTION_PREFIX = "12월 ";

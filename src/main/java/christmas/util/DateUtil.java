@@ -1,6 +1,9 @@
-package christmas;
+package christmas.util;
 
-public class DateService {
+import christmas.model.Date;
+import christmas.view.InputView;
+
+public class DateUtil {
     private static Date createDate(int day) {
         return new Date(day);
     }

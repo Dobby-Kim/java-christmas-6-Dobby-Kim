@@ -1,5 +1,10 @@
 package christmas;
 
+import christmas.enums.Menu;
+import christmas.model.Date;
+import christmas.model.Order;
+import christmas.model.Orders;
+import christmas.util.DiscountUtil;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -8,7 +13,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DiscountCalculatorTest {
+class DiscountUtilTest {
 
     @Test
     void testCalculateDiscounts() {
@@ -16,7 +21,7 @@ class DiscountCalculatorTest {
         List<Order> orders = new ArrayList<>();
 
         Menu menu1 = Menu.fromString("바비큐립");
-        int quantity1 = 2;
+        int quantity1 = 3;
         Menu menu2 = Menu.fromString("아이스크림");
         int quantity2 = 2;
 
@@ -24,12 +29,12 @@ class DiscountCalculatorTest {
         orders.add(new Order(menu2, quantity2));
 
         Orders testOrders = new Orders(orders);
-        Map<String, Integer> discounts = DiscountCalculator.calculateDiscounts(date, testOrders);
+        Map<String, Integer> discounts = DiscountUtil.calculateDiscounts(date, testOrders);
         assertNotNull(discounts);
         assertTrue(discounts.containsKey("크리스마스 디데이 할인"));
         assertTrue(discounts.containsKey("평일 할인") || discounts.containsKey("주말 할인"));
         assertTrue(discounts.containsKey("특별 할인"));
-        if (DiscountCalculator.isChampagneGift(testOrders.calculateTotalAmount())) {
+        if (DiscountUtil.isChampagneGift(testOrders.calculateTotalAmount())) {
             assertTrue(discounts.containsKey("증정 이벤트"));
         }
     }
@@ -42,7 +47,7 @@ class DiscountCalculatorTest {
                 "증정 이벤트", 25000
         );
 
-        int totalBenefit = DiscountCalculator.calculateTotalBenefit(discounts);
+        int totalBenefit = DiscountUtil.calculateTotalBenefit(discounts);
         assertEquals(28000, totalBenefit);
     }
 
@@ -54,8 +59,8 @@ class DiscountCalculatorTest {
                 "증정 이벤트", 25000
         );
 
-        int totalDiscount = DiscountCalculator.calculateTotalDiscount(discounts);
+        int totalDiscount = DiscountUtil.calculateTotalDiscount(discounts);
         assertEquals(3000, totalDiscount);
     }
-    
+
 }

@@ -1,5 +1,9 @@
-package christmas;
+package christmas.model;
 
+
+import christmas.enums.Menu;
+import christmas.util.Constant;
+import christmas.view.ErrorMessage;
 
 public class Order {
     private final Menu menu;
@@ -14,7 +18,7 @@ public class Order {
 
     private void validator(int quantity) {
         if (quantity < 1) {
-            throw new IllegalArgumentException(ErrorMessage.formatErrorMessage("주문"));
+            throw new IllegalArgumentException(ErrorMessage.formatErrorMessage(Constant.ORDER));
         }
     }
 

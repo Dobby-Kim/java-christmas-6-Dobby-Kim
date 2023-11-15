@@ -1,4 +1,8 @@
-package christmas;
+package christmas.model;
+
+import christmas.enums.DayOfWeek;
+import christmas.util.Constant;
+import christmas.view.ErrorMessage;
 
 public class Date {
     private final int day;
@@ -12,7 +16,7 @@ public class Date {
 
     private void dateValidator(int day) {
         if (day < 1 || day > 31) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException(ErrorMessage.formatErrorMessage(Constant.DATE));
         }
     }
 

@@ -1,5 +1,6 @@
 package christmas;
 
+import christmas.enums.DayOfWeek;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

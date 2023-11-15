@@ -1,4 +1,9 @@
-package christmas;
+package christmas.view;
+
+import christmas.dto.OrderDTO;
+import christmas.dto.OrderDetailsDTO;
+import christmas.enums.EventBadge;
+import christmas.model.Date;
 
 import java.text.DecimalFormat;
 import java.util.List;

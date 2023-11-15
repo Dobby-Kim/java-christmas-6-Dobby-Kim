@@ -1,4 +1,7 @@
-package christmas;
+package christmas.util;
+
+import christmas.enums.Menu;
+import christmas.view.ErrorMessage;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -7,10 +10,10 @@ public class InputValidator {
 
     public static void validateDateInput(String date) {
         if (isValidNumberInput(date)) {
-            throw new IllegalArgumentException(ErrorMessage.formatErrorMessage("날짜"));
+            throw new IllegalArgumentException(ErrorMessage.formatErrorMessage(Constant.DATE));
         }
         if (!isValidDateInput(date)) {
-            throw new IllegalArgumentException(ErrorMessage.formatErrorMessage("날짜"));
+            throw new IllegalArgumentException(ErrorMessage.formatErrorMessage(Constant.DATE));
         }
     }
 
@@ -18,12 +21,12 @@ public class InputValidator {
         Set<String> menuSet = new HashSet<>();
 
         for (String input : orderInputs) {
-            String[] parts = input.trim().split("-");
+            String[] parts = input.trim().split(Constant.MENU_AMOUNT_PARSER);
             if (parts.length != 2 || !isValidMenu(parts[0].trim()) || isValidNumberInput(parts[1].trim())) {
-                throw new IllegalArgumentException(ErrorMessage.formatErrorMessage("주문"));
+                throw new IllegalArgumentException(ErrorMessage.formatErrorMessage(Constant.ORDER));
             }
             if (!menuSet.add(parts[0].trim())) {
-                throw new IllegalArgumentException(ErrorMessage.formatErrorMessage("주문"));
+                throw new IllegalArgumentException(ErrorMessage.formatErrorMessage(Constant.ORDER));
             }
         }
     }
@@ -41,7 +44,7 @@ public class InputValidator {
     private static boolean isValidNumberInput(String quantityStr) {
         try {
             int quantity = Integer.parseInt(quantityStr);
-            return quantity < 1;
+            return quantity < Constant.MIN_TOTAL_AMOUNT;
         } catch (NumberFormatException e) {
             return true;
         }
@@ -49,6 +52,6 @@ public class InputValidator {
 
     private static boolean isValidDateInput(String quantityStr) {
         int quantity = Integer.parseInt(quantityStr);
-        return 1 <= quantity && quantity <= 31;
+        return Constant.MIN_DATE <= quantity && quantity <= Constant.MAX_DATE;
     }
 }

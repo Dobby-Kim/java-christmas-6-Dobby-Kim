@@ -1,4 +1,7 @@
-package christmas;
+package christmas.enums;
+
+import christmas.util.Constant;
+import christmas.view.ErrorMessage;
 
 import java.util.Arrays;
 
@@ -42,7 +45,7 @@ public enum Menu {
         return Arrays.stream(Menu.values())
                 .filter(menu -> menu.name.equalsIgnoreCase(text))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.formatErrorMessage("주문")));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.formatErrorMessage(Constant.ORDER)));
     }
 
 

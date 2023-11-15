@@ -1,19 +1,29 @@
-package christmas;
+package christmas.util;
+
+import christmas.enums.DayOfWeek;
+import christmas.enums.MenuCategory;
+import christmas.model.Date;
+import christmas.model.Orders;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class DiscountCalculator {
+public class DiscountUtil {
+    private static final String CHRISTMAS_D_DAY_DISCOUNT = "크리스마스 디데이 할인";
+    private static final String WEEKDAY_DISCOUNT = "평일 할인";
+    private static final String WEEKEND_DISCOUNT = "주말 할인";
+    private static final String SPECIAL_DISCOUNT = "특별 할인";
+    private static final String GIFT_EVENT = "증정 이벤트";
 
     public static Map<String, Integer> calculateDiscounts(Date date, Orders orders) {
         Map<String, Integer> discounts = new HashMap<>();
         if (isChampagneGift(orders.calculateTotalAmount())) {
-            discounts.put("증정 이벤트", 25_000);
+            discounts.put(GIFT_EVENT, 25_000);
         }
-        discounts.put("크리스마스 디데이 할인", calculateDdayDiscount(date));
-        discounts.put("평일 할인", calculateWeekdayDiscount(date, orders));
-        discounts.put("주말 할인", calculateWeekendDiscount(date, orders));
-        discounts.put("특별 할인", calculateSpecialDiscount(date));
+        discounts.put(CHRISTMAS_D_DAY_DISCOUNT, calculateDdayDiscount(date));
+        discounts.put(WEEKDAY_DISCOUNT, calculateWeekdayDiscount(date, orders));
+        discounts.put(WEEKEND_DISCOUNT, calculateWeekendDiscount(date, orders));
+        discounts.put(SPECIAL_DISCOUNT, calculateSpecialDiscount(date));
 
         return discounts;
     }
