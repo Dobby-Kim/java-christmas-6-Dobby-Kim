@@ -19,4 +19,10 @@ public class Orders {
                 .mapToInt(order -> order.getMenu().getPrice() * order.getQuantity())
                 .sum();
     }
+
+    public int calculateTotalQuantity() {
+        return orders.stream()
+                .mapToInt(Order::getQuantity)
+                .sum();
+    }
 }
