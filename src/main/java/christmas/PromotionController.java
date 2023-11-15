@@ -19,19 +19,44 @@ public class PromotionController {
                 .allMatch(order -> order.getMenu().getCategory() == MenuCategory.BEVERAGE);
     }
 
-    private static OrderDetailsDTO processOrders(Date date, Orders orders) {
+    private OrderDetailsDTO processOrders(Date date, Orders orders) {
         int totalAmount = orders.calculateTotalAmount();
-        Map<String, Integer> discounts = DiscountCalculator.calculateDiscounts(date, orders);
-        boolean isChampagneGift = DiscountCalculator.isChampagneGift(totalAmount);
-        int totalBenefit = DiscountCalculator.calculateTotalBenefit(discounts);
-        int totalDiscount = DiscountCalculator.calculateTotalDiscount(discounts);
-        EventBadge eventBadge = BadgeCalculator.calculateEventBadge(totalBenefit);
-        List<OrderDTO> orderDTOs = orders.getOrders().stream()
-                .map(order -> new OrderDTO(order.getMenu().getName(), order.getQuantity())).toList();
+        Map<String, Integer> discounts = calculateDiscounts(date, orders);
+        boolean isChampagneGift = isChampagneGift(totalAmount);
+        int totalBenefit = calculateTotalBenefit(discounts);
+        int totalDiscount = calculateTotalDiscount(discounts);
+        EventBadge eventBadge = calculateEventBadge(totalBenefit);
+        List<OrderDTO> orderDTOs = createOrderDTOs(orders);
 
         return new OrderDetailsDTO(
                 date, orderDTOs, discounts, totalAmount, totalDiscount, totalBenefit, eventBadge, isChampagneGift
         );
+    }
+
+    private Map<String, Integer> calculateDiscounts(Date date, Orders orders) {
+        return DiscountCalculator.calculateDiscounts(date, orders);
+    }
+
+    private boolean isChampagneGift(int totalAmount) {
+        return DiscountCalculator.isChampagneGift(totalAmount);
+    }
+
+    private int calculateTotalBenefit(Map<String, Integer> discounts) {
+        return DiscountCalculator.calculateTotalBenefit(discounts);
+    }
+
+    private int calculateTotalDiscount(Map<String, Integer> discounts) {
+        return DiscountCalculator.calculateTotalDiscount(discounts);
+    }
+
+    private EventBadge calculateEventBadge(int totalBenefit) {
+        return BadgeCalculator.calculateEventBadge(totalBenefit);
+    }
+
+    private List<OrderDTO> createOrderDTOs(Orders orders) {
+        return orders.getOrders().stream()
+                .map(order -> new OrderDTO(order.getMenu().getName(), order.getQuantity()))
+                .toList();
     }
 
     public void run() {
