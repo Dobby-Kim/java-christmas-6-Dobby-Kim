@@ -1,9 +1,12 @@
 package christmas;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+
+    private static final DecimalFormat currencyFormat = new DecimalFormat("#,###");
 
     public static void printMessage(String message) {
         System.out.println(message);
@@ -25,70 +28,68 @@ public class OutputView {
     }
 
     private static void printIntroduction(Date date) {
-        printMessage("12월 " + date.getDay() + "일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+        printMessage(OutputMessage.INTRODUCTION_PREFIX + date.getDay() + OutputMessage.INTRODUCTION_SUFFIX);
         printParseLine();
     }
 
     private static void printOrders(List<OrderDTO> orderDTOs) {
-        printMessage("<주문 메뉴>");
+        printMessage(OutputMessage.ORDER_HEADER);
         for (OrderDTO order : orderDTOs) {
-            printMessage(order.getMenuName() + " " + order.getQuantity() + "개");
+            printMessage(order.getMenuName() + " " + order.getQuantity() + OutputMessage.COUNT_UNIT);
         }
         printParseLine();
     }
 
     private static void printTotalAmountBeforeDiscount(int totalAmount) {
-        printMessage("<할인 전 총주문 금액>");
-        printMessage(totalAmount + "원");
+        printMessage(OutputMessage.TOTAL_AMOUNT_BEFORE_DISCOUNT);
+        printMessage(formatCurrency(totalAmount) + OutputMessage.WON_UNIT);
         printParseLine();
-
     }
 
     private static void printGift(boolean isChampagneGiftIncluded) {
-        printMessage("<증정 메뉴>");
+        printMessage(OutputMessage.GIFT_HEADER);
         if (isChampagneGiftIncluded) {
-            printMessage("샴페인 1개");
-        }
-        if (!isChampagneGiftIncluded) {
-            printMessage("없음");
+            printMessage(OutputMessage.CHAMPAGNE_GIFT);
+        } else {
+            printMessage(OutputMessage.NO_GIFT);
         }
         printParseLine();
-
     }
 
     private static void printDiscountDetails(Map<String, Integer> discountDetails) {
-        printMessage("<혜택 내역>");
+        printMessage(OutputMessage.DISCOUNT_DETAILS_HEADER);
         boolean isDiscountNone = true;
         for (Map.Entry<String, Integer> entry : discountDetails.entrySet()) {
             if (entry.getValue() != 0) {
-                printMessage(entry.getKey() + ": " + -1 * entry.getValue() + "원");
+                printMessage(entry.getKey() + ": " + formatCurrency(-1 * entry.getValue()) + OutputMessage.WON_UNIT);
                 isDiscountNone = false;
             }
         }
         if (isDiscountNone) {
-            printMessage("없음");
+            printMessage(OutputMessage.NO_DISCOUNT);
         }
         printParseLine();
-
     }
 
     private static void printTotalBenefitAmount(int totalDiscount) {
-        printMessage("<총혜택 금액>");
-
-        printMessage(-1 * totalDiscount + "원");
+        printMessage(OutputMessage.TOTAL_BENEFIT_AMOUNT);
+        printMessage(formatCurrency(-1 * totalDiscount) + OutputMessage.WON_UNIT);
         printParseLine();
     }
 
     private static void printFinalAmount(int finalAmount) {
-        printMessage("<할인 후 예상 결제 금액>");
-        printMessage(finalAmount + "원");
+        printMessage(OutputMessage.FINAL_AMOUNT);
+        printMessage(formatCurrency(finalAmount) + OutputMessage.WON_UNIT);
         printParseLine();
-
     }
 
     private static void printEventBadge(EventBadge eventBadge) {
-        printMessage("<12월 이벤트 배지>");
+        printMessage(OutputMessage.EVENT_BADGE_HEADER);
         printMessage(eventBadge.getBadgeName());
+        printParseLine();
     }
 
+    private static String formatCurrency(int amount) {
+        return currencyFormat.format(amount);
+    }
 }
