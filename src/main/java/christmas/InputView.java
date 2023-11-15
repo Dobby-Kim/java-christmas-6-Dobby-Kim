@@ -6,7 +6,7 @@ public class InputView {
 
 
     public static int readDate() {
-        System.out.println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
+        OutputView.printMessage(UserMessage.INPUT_DATE_PROMPT);
         while (true) {
             try {
                 String inputDate = Console.readLine().trim();
@@ -20,7 +20,7 @@ public class InputView {
 
 
     public static String[] readOrderInputs() {
-        System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
+        OutputView.printMessage(UserMessage.INPUT_ORDER_PROMPT);
         while (true) {
             try {
                 String[] orderInputs = Console.readLine().split(",");
