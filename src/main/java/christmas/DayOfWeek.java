@@ -34,6 +34,9 @@ public enum DayOfWeek {
     }
 
     public boolean isSpecialEvent() {
+        if (dayValue == 25) {
+            return true;
+        }
         return specialEvent;
     }
 }
